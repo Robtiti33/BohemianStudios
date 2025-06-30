@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bohemian Studios - Creer en experiencias</title>
+  <link rel="icon" href="ChatGPT_Image_Jun_27__2025__09_05_54_PM-removebg-preview.ico">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #d6f5f5;
+      color: #c0392b;
+      line-height: 1.6;
+    }
+    header {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 4px solid #c0392b;
+      transition: all 0.5s ease;
+      min-height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header.scrolled {
+      padding: 0.7rem 2rem;
+      min-height: 60px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      transition: font-size 0.5s ease;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      user-select: none;
+      cursor: pointer;
+      flex-grow: 1;
+      text-align: left;
+    }
+    header.scrolled h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.1rem;
+    }
+    header p.lema {
+      font-size: 1rem;
+      color: #5dade2;
+      margin: 0 1rem 0 0;
+      transition: font-size 0.5s ease, opacity 0.5s ease;
+      opacity: 1;
+      flex-grow: 2;
+      user-select: none;
+      text-align: center;
+    }
+    header.scrolled p.lema {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+    #cartBtn {
+      background-color: #c0392b;
+      border: none;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #cartBtn:hover {
+      background-color: #922b21;
+    }
+    h2, h3, h4, h5, h6 {
+      color: #c0392b;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    main {
+      padding: 2rem;
+      animation: fadeIn 1.5s ease-in;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .search-filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .search-filter-container:focus-within {
+      border-color: #c0392b;
+      box-shadow: 0 0 12px #c0392b;
+    }
+    .search-box {
+      flex: 1;
+      position: relative;
+      border: 2px solid #c0392b;
+      border-radius: 10px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .search-box input[type="text"] {
+      width: 100%;
+      padding: 0.5rem 2.5rem 0.5rem 1rem;
+      border: none;
+      font-size: 1rem;
+      color: #333;
+      background-color: rgba(255, 255, 255, 0.8);
+      outline: none;
+      border-radius: 10px;
+      cursor: text;
+    }
+    .search-box:hover,
+    .search-box input[type="text"]:focus {
+      border-color: #922b21;
+      box-shadow: 0 0 8px #922b21;
+    }
+    .search-box::after {
+      content: "🔍";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 1.2rem;
+      color: #c0392b;
+      opacity: 0.7;
+    }
+    select {
+      padding: 0.5rem;
+      background-color: #c0392b;
+      color: #fff;
+      border-radius: 10px;
+      border: 2px solid #c0392b;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 150px;
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    select:hover,
+    select:focus {
+      background-color: #922b21;
+      border-color: #922b21;
+      box-shadow: 0 0 10px #922b21;
+      outline: none;
+    }
+    select:focus {
+      animation: pulseBorder 0.6s ease-in-out;
+    }
+    @keyframes pulseBorder {
+      0%, 100% { border-color: #922b21; box-shadow: 0 0 10px #922b21; }
+      50% { border-color: #c0392b; box-shadow: 0 0 5px #c0392b; }
+    }
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto 3rem;
+    }
+    .game-card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 2px solid #c0392b;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(192, 57, 43, 0.4);
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .game-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #c0392b;
+    }
+    .game-cover {
+      height: 160px;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3rem;
+      padding: 0.5rem;
+      user-select: none;
+      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.6);
+      background-color: #c0392b;
+      border: 3px solid #922b21;
+      text-shadow: 1px 1px 3px #622;
+      user-select: none;
+    }
+    .game-card button {
+      background:#c0392b;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      padding:0.5rem 1rem;
+      cursor:pointer;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+    .game-card button:hover {
+      background-color: #922b21;
+    }
+    .creditos {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      background-color: rgba(255, 255, 255, 0.6);
+      border: 2px solid #c0392b;
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 0 15px rgba(192, 57, 43, 0.4);
+      text-align: center;
+      transition: opacity 0.5s ease;
+    }
+    .creditos ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    .creditos li {
+      background-color: #c0392b;
+      color: white;
+      border-radius: 15px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      user-select: none;
+      box-shadow: 0 0 5px #922b21;
+      min-width: 110px;
+    }
+    #productDetail,
+    #cartDetail {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      background-color: rgba(255,255,255,0.9);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(192, 57, 43, 0.4);
+      animation: fadeIn 0.7s ease-in;
+    }
+    #productDetail.active,
+    #cartDetail.active {
+      display: block;
+    }
+    #productDetail .product-container,
+    #cartDetail .cart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+    #productDetail .product-image {
+      flex: 1 1 300px;
+      height: 350px;
+      border-radius: 15px;
+      background-color: #c0392b;
+      color: white;
+      font-weight: bold;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-shadow: 1px 1px 4px #922b21;
+      user-select: none;
+      border: 3px solid #922b21;
+      box-shadow: inset 0 0 15px rgba(255,255,255,0.5);
+      text-align: center;
+    }
+    #productDetail .product-info {
+      flex: 1 1 350px;
+    }
+    #productDetail .product-info h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    #productDetail .product-info p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    #productDetail .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    #productDetail .buy-button,
+    #productDetail .add-cart-button {
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      margin-right: 10px;
+    }
+    #productDetail .buy-button:hover,
+    #productDetail .add-cart-button:hover {
+      background-color: #922b21;
+    }
+    #productDetail .back-button,
+    #cartDetail .back-button {
+      margin-bottom: 1rem;
+      display: inline-block;
+      color: #c0392b;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+      user-select: none;
+    }
+    #productDetail .back-button:hover,
+    #cartDetail .back-button:hover {
+      color: #922b21;
+    }
+    #cartBtnClose {
+      background-color: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #c0392b;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      user-select: none;
+    }
+    #cartDetail {
+      position: relative;
+    }
+    #cartDetail ul {
+      list-style: none;
+      padding: 0;
+      max-height: 350px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    #cartDetail ul li {
+      background: #f9f9f9;
+      border: 1px solid #c0392b;
+      border-radius: 10px;
+      margin-bottom: 0.6rem;
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #333;
+      user-select: none;
+    }
+    #cartDetail ul li button {
+      background-color: #c0392b;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: 700;
+    }
+    #cartDetail ul li button:hover {
+      background-color: #922b21;
+    }
+    #cartEmpty {
+      text-align: center;
+      font-style: italic;
+      color: #922b21;
+      user-select: none;
+    }
+
+    #loader {
+  position: fixed;
+  z-index: 3000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #d6f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 1s ease 2s forwards;
+}
+
+#loader img {
+  width: 180px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+#checkoutBtn {
+  background-color: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  margin-top: 1rem;
+}
+
+#checkoutBtn:hover {
+  background-color: #922b21;
+  transform: scale(1.05);
+}
+
+#reseñasSection {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+#reviewForm {
+  background-color: #fff;
+  padding: 1rem;
+  border: 2px solid #c0392b;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(192,57,43,0.3);
+  margin-bottom: 2rem;
+}
+
+#reviewForm textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  border: 2px solid #c0392b;
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-family: 'Segoe UI', sans-serif;
+  resize: none;
+}
+
+#reviewForm button {
+  margin-top: 0.5rem;
+  background-color: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#reviewForm button:hover {
+  background-color: #922b21;
+}
+
+#starRating span {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+#starRating .selected {
+  color: #f39c12;
+}
+
+.review-item {
+  background-color: rgba(255,255,255,0.9);
+  border: 2px solid #c0392b;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(192, 57, 43, 0.2);
+}
+
+.review-item h5 {
+  margin-bottom: 0.3rem;
+  color: #c0392b;
+}
+
+.review-item .stars {
+  color: #f1c40f;
+  font-size: 1.2rem;
+}
+
+  .review-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .stars {
+    color: gold;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .review-card small {
+    color: #555;
+  }
+
+  .delete-review {
+    margin-top: 6px;
+    background: crimson;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .delete-review:hover {
+    background: darkred;
+  }
+</style>
+
+
+</head>
+<body>
+
+  <div id="loader">
+  <img src="chatgpttimage.png" alt="Bohemian Studios Logo" />
+  </div>
+
+<header id="mainHeader">
+  <h1>Bohemian Studios</h1>
+  <p class="lema">Creer en experiencias</p>
+  <button id="cartBtn" title="Ver mi carrito">Ver mi carrito 🛒</button>
+</header>
+
+<main>
+  <h2>Bienvenido a la página oficial de Bohemian Studios</h2>
+
+  <div class="search-filter-container" id="searchFilterContainer">
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Buscar juegos..." autocomplete="off" />
+    </div>
+    <select>
+      <option>Inicio</option>
+      <option>Juegos</option>
+      <option>Bohemia Store</option>
+      <option>Historia</option>
+    </select>
+  </div>
+
+  <section id="gameGrid" class="game-grid">
+    <article class="game-card" data-name="cubito">
+      <div class="game-cover">Cubito</div>
+      <h3>Cubito</h3>
+      <p>Un juego de puzzles 3D con retos desafiantes y colores vibrantes.</p>
+      <p><strong>Precio:</strong> $4999</p>
+      <button class="buy-btn" data-game="cubito">Comprar</button>
+    </article>
+
+    <article class="game-card" data-name="pacman remastered">
+      <div class="game-cover">PacMan Remastered</div>
+      <h3>NO DISPONIBLE</h3>
+      <h3>PacMan Remastered</h3>
+      <p>El clásico de siempre, ahora con gráficos y sonidos mejorados.</p>
+      <p><strong>Precio:</strong> $999</p>
+      <button class="" data-game="pacman">Comprar</button>
+    </article>
+
+    <article class="game-card" data-name="flappy bird 3d remastered">
+      <div class="game-cover">Flappy Bird 3D Remastered</div>
+      <h3>Flappy Bird 3D Remastered</h3>
+      <p>El juego viral que todos aman, ahora en 3D y con nuevos niveles.</p>
+      <p><strong>Precio:</strong> $3999</p>
+      <button class="buy-btn" data-game="flappybird">Comprar</button>
+    </article>
+
+    <article class="game-card" data-name="polyus">
+      <div class="game-cover">Polyus</div>
+      <h3>Polyus</h3>
+      <p>Una aventura espacial donde explorarás galaxias desconocidas.</p>
+      <p><strong>Precio:</strong> $9999</p>
+      <button class="buy-btn" data-game="polyus">Comprar</button>
+    </article>
+
+        <article class="game-card" data-name="polyus">
+      <div class="game-cover">ArgPlay</div>
+      <h3>PROXIMAMENTE</h3>
+      <h3>ArgPlay</h3>
+      <p>Un juego sobre Roleplay Argentino online.</p>
+      <p><strong>Precio:</strong> $49999</p>
+      <button class="" data-game="polyus">Comprar</button>
+    </article>
+  </section>
+
+  <section id="productDetail">
+    <span class="back-button" id="backToList">← Volver a la tienda</span>
+    <div class="product-container">
+      <div class="product-image" id="productImage"></div>
+      <div class="product-info">
+        <h2 id="productTitle"></h2>
+        <p id="productDescription"></p>
+        <p class="price" id="productPrice"></p>
+        <button class="add-cart-button" id="addToCartBtn">Agregar al carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="cartDetail">
+    <span class="back-button" id="closeCartBtn">← Volver a la tienda</span>
+    <div class="cart-container">
+      <ul id="cartList"></ul>
+      <p id="cartTotal"><strong>Total:</strong> $0</p>
+    <button id="checkoutBtn">Finalizar compra ✅</button>
+    <p id="cartEmpty">Tu carrito está vacío.</p>
+
+
+    </div>
+  </section>
+
+  <section class="creditos" id="creditosSection" >
+    <h3>Historia:</h3>
+    <p class="history" >
+      Nuestra historia comienza en <strong>2020</strong>, con el objetivo de poder ser una pequeña parte de los
+      videojuegos y el mundo de las experiencias virtuales. Recaimos muchas veces pero por suerte logramos hacer
+      muchos juegos y ventas. A dia de hoy no somos una "empresa" conocida pero estamos orgullosos de todos nuestros
+      juegos y ventas que hicimos.
+    </p>
+  </section>
+
+<section class="creditos" id="reseñas">
+  <h3>Reseñas de la comunidad</h3>
+
+  <form id="reviewForm" onsubmit="return false;">
+    <label for="reviewStars">Tu calificación:</label>
+    <select id="reviewStars">
+      <option value="5">★★★★★ - Excelente</option>
+      <option value="4">★★★★ - Muy bueno</option>
+      <option value="3">★★★ - Regular</option>
+      <option value="2">★★ - Malo</option>
+      <option value="1">★ - Muy malo</option>
+      <option value="0">0 - Sin estrellas</option>
+    </select>
+    <br><br>
+    <textarea id="reviewComment" rows="3" placeholder="Escribí tu reseña..." required></textarea>
+    <br>
+    <button type="button" onclick="submitReview()">Enviar reseña</button>
+  </form>
+
+  <div id="reviewsContainer" style="margin-top: 2rem;"></div>
+</section>
+
+
+  <section class="creditos" id="creditosSection" >
+    <h3>Unirse al equipo:</h3>
+    <br>
+    <h3>¿Queres ser parte de nosotros?</h3>
+    <p>Manda un mail a <strong>bohemian.studios@gmail.com</strong> y pone de asunto "Unirse a bohemian" y luego
+    te contestaremos con un formulario donde tendras que poner algunos datos tuyos, tus habilidades, tu experiencia,
+  etc...</p>
+  </section>
+
+  <section class="creditos" id="creditosSection" >
+    <h3>Plataformas:</h3>
+    <ol>
+      <li>Youtube: https://www.youtube.com/@bohemian2025</li>
+      <br>
+      <li>Instagram: https://www.instagram.com/bohemianstudios1/</li>
+      <br>
+      <li>Roblox: https://www.roblox.com/es/users/8652244341/profile</li>
+      <br>
+      <li>TikTok: Proximamente</li>
+      <br>
+      <li>Twitter: Proximamente</li>
+    </ol>
+  </section>
+
+  <section class="creditos" id="creditosSection">
+    <h3>Créditos:</h3>
+    <ul>
+      <li>Martina López</li>
+      <li>Santiago Gómez</li>
+      <li>Camila Fernández</li>
+      <li>Lucas Martínez</li>
+      <li>Milo Reutter</li>
+      <li>Valentina Ríos</li>
+      <li>Diego Herrera</li>
+      <li>Julieta Sánchez</li>
+      <li>Matías Ramírez</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <h4>Contactos:</h4>
+  <h5>Mail: <strong>bohemia.studios@gmail.com</strong></h5>
+  <h6>©2025 Bohemian Studios By: Sofia_sz</h6>
+</footer>
+
+<!-- Agregar este bloque justo antes del cierre de </body> -->
+
+<!-- Modal overlay para el email -->
+<div id="emailModal" style="display:none;">
+  <div id="emailModalContent">
+    <button id="closeEmailModal" title="Cerrar">×</button>
+    <div id="emailModalBody">
+      <!-- Contenido dinámico con JS -->
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Estilos para el modal overlay */
+  #emailModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+  }
+  #emailModalContent {
+    position: relative;
+    background: white;
+    border: 3px solid #c0392b;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(192, 57, 43, 0.7);
+    width: 90%;
+    max-width: 400px;
+    padding: 1.5rem 2rem 2rem 2rem;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: #c0392b;
+  }
+  #closeEmailModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    background: transparent;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    font-weight: 900;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+  #closeEmailModal:hover {
+    color: #922b21;
+  }
+  #emailModalBody input[type="email"] {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #c0392b;
+    border-radius: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  #emailModalBody input[type="email"]:focus {
+    border-color: #922b21;
+    box-shadow: 0 0 10px #922b21;
+  }
+  #emailModalBody .error-message {
+    color: #922b21;
+    font-weight: 700;
+  #emailModalBody button {
+    background-color: #c0392b;
+    border: none;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    margin: 0.3rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  }
+  #emailModalBody button:hover {
+    background-color: #922b21;
+  }
+  #emailModalBody a.copy-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #c0392b;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 700;
+    user-select: all;
+  }
+</style>
+
+<script>
+  // Variables principales que ya tenías definidas
+  const gameData = {
+    cubito: {
+      title: 'Cubito',
+      description: 'Un juego de puzzles 3D con retos desafiantes y colores vibrantes. Explora mundos llenos de cubos y supera obstáculos con ingenio y rapidez.',
+      price: '$4999',
+    },
+    pacman: {
+      title: 'PacMan Remastered',
+      description: 'El clásico de siempre, ahora con gráficos y sonidos mejorados. Revive la nostalgia con esta versión renovada.',
+      price: '$999',
+    },
+    flappybird: {
+      title: 'Flappy Bird 3D Remastered',
+      description: 'El juego viral que todos aman, ahora en 3D y con nuevos niveles y retos. ¿Cuánto podés aguantar volando?',
+      price: '$3999',
+    },
+    polyus: {
+      title: 'Polyus',
+      description: 'Una aventura espacial donde explorarás galaxias desconocidas. Prepárate para un viaje épico y visualmente impactante.',
+      price: '$9999',
+    }
+  }
+
+  // Referencias a elementos del DOM
+  const searchInput = document.getElementById('searchInput');
+  const games = document.querySelectorAll('#gameGrid .game-card');
+  const productDetail = document.getElementById('productDetail');
+  const gameGrid = document.getElementById('gameGrid');
+  const backToListBtn = document.getElementById('backToList');
+  const cartBtn = document.getElementById('cartBtn');
+  const cartDetailSection = document.getElementById('cartDetail');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartList = document.getElementById('cartList');
+  const cartEmpty = document.getElementById('cartEmpty');
+  const creditosSection = document.getElementById('creditosSection');
+  const searchFilterContainer = document.getElementById('searchFilterContainer');
+  const addToCartBtn = document.getElementById('addToCartBtn');
+  const productTitle = document.getElementById('productTitle');
+  const productDescription = document.getElementById('productDescription');
+  const productPrice = document.getElementById('productPrice');
+  const productImage = document.getElementById('productImage');
+
+  // Variables para modal email
+  const emailModal = document.getElementById('emailModal');
+  const emailModalBody = document.getElementById('emailModalBody');
+  const closeEmailModalBtn = document.getElementById('closeEmailModal');
+
+  let cart = [];
+  let currentGameKey = null;
+
+  // Función para validar email básico
+  function validarEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  // Mostrar modal para pedir email
+  function mostrarModalEmail() {
+    emailModalBody.innerHTML = `
+      <h2>Ingrese su email para finalizar la compra</h2>
+      <input type="email" id="emailInput" placeholder="tu@email.com" />
+      <div id="errorEmail" class="error-message" style="display:none;"></div>
+      <button id="submitEmailBtn">Enviar</button>
+    `;
+
+    // Mostrar modal y ocultar carrito y otros
+    emailModal.style.display = 'flex';
+    cartDetailSection.style.display = 'none';
+    creditosSection.style.opacity = '0';
+    searchFilterContainer.style.opacity = '0';
+    cartBtn.style.display = 'none';
+    gameGrid.style.display = 'none';
+
+    // Enfocar input email
+    const emailInput = document.getElementById('emailInput');
+    emailInput.focus();
+
+    // Botón enviar email
+    document.getElementById('submitEmailBtn').onclick = () => {
+      const emailVal = emailInput.value.trim();
+      if (!validarEmail(emailVal)) {
+        const errorDiv = document.getElementById('errorEmail');
+        errorDiv.textContent = 'El email seleccionado es inválido, inténtalo con un mail válido';
+        errorDiv.style.display = 'block';
+      } else {
+        mostrarModalExito(emailVal);
+      }
+    };
+  }
+
+  // Mostrar modal de éxito con link para copiar
+function mostrarModalExito(email) {
+  emailModalBody.innerHTML = `
+    <h2>¡Gracias por su compra!</h2>
+    <p>Su email: <strong>${email}</strong></p>
+    <p>Complete el siguiente formulario:</p>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="https://forms.gle/MWbjb43XiaLWddPP9" target="_blank" id="formLink" class="copy-link">Ir al formulario</a>
+      <button id="copyLinkBtn">📋 Copiar enlace</button>
+    </div>
+    <div style="margin-top: 1rem;">
+      <button id="retryBtn">Reintentar</button>
+      <button id="closeBtn">Cerrar</button>
+    </div>
+  `;
+
+  // Botón de copiar link
+  document.getElementById('copyLinkBtn').onclick = () => {
+    const link = "https://forms.gle/MWbjb43XiaLWddPP9";
+    navigator.clipboard.writeText(link).then(() => {
+      alert("¡Enlace copiado al portapapeles!");
+    }).catch(() => {
+      alert("Error al copiar el enlace.");
+    });
+  };
+
+  document.getElementById('retryBtn').onclick = () => {
+    mostrarModalEmail();
+  };
+
+  document.getElementById('closeBtn').onclick = cerrarModalEmail;
+}
+
+
+  // Cerrar modal y volver al carrito
+  function cerrarModalEmail() {
+    emailModal.style.display = 'none';
+    cartDetailSection.style.display = 'block';
+    creditosSection.style.opacity = '1';
+    searchFilterContainer.style.opacity = '1';
+    cartBtn.style.display = 'inline-block';
+    gameGrid.style.display = 'none';
+  }
+
+  // Cerrar modal con la X roja
+  closeEmailModalBtn.onclick = cerrarModalEmail;
+
+  // Buscador juegos
+  searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    games.forEach(game => {
+      const name = game.getAttribute('data-name');
+      if (name.includes(term)) {
+        game.style.display = '';
+      } else {
+        game.style.display = 'none';
+      }
+    });
+  });
+
+  // Mostrar detalle del juego
+  document.querySelectorAll('.buy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const gameKey = btn.getAttribute('data-game');
+      const game = gameData[gameKey];
+      if (!game) return;
+      currentGameKey = gameKey;
+      productTitle.textContent = game.title;
+      productDescription.textContent = game.description;
+      productPrice.textContent = game.price;
+      productImage.textContent = game.title;
+
+      gameGrid.style.display = 'none';
+      productDetail.classList.add('active');
+      cartDetailSection.classList.remove('active');
+      creditosSection.style.opacity = '0';
+      searchFilterContainer.style.opacity = '0';
+      cartBtn.style.display = 'none';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+  });
+
+  backToListBtn.addEventListener('click', () => {
+    productDetail.classList.remove('active');
+    gameGrid.style.display = '';
+    creditosSection.style.opacity = '1';
+    searchFilterContainer.style.opacity = '1';
+    cartBtn.style.display = 'inline-block';
+  });
+
+  // Carrito
+  cartBtn.addEventListener('click', () => {
+    cartDetailSection.classList.add('active');
+    productDetail.classList.remove('active');
+    gameGrid.style.display = 'none';
+    creditosSection.style.opacity = '0';
+    searchFilterContainer.style.opacity = '0';
+    cartBtn.style.display = 'none';
+    renderCart();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  closeCartBtn.addEventListener('click', () => {
+    cartDetailSection.classList.remove('active');
+    gameGrid.style.display = '';
+    creditosSection.style.opacity = '1';
+    searchFilterContainer.style.opacity = '1';
+    cartBtn.style.display = 'inline-block';
+  });
+
+  // Renderizar carrito
+  function renderCart() {
+    cartList.innerHTML = '';
+    let total = 0;
+    if (cart.length === 0) {
+      cartEmpty.style.display = 'block';
+      document.getElementById('cartTotal').style.display = 'none';
+    } else {
+      cartEmpty.style.display = 'none';
+      document.getElementById('cartTotal').style.display = 'block';
+
+      cart.forEach((gameKey, index) => {
+        const game = gameData[gameKey];
+        const priceNumber = parseInt(game.price.replace('$', '').replace('.', ''));
+        total += priceNumber;
+
+        const li = document.createElement('li');
+        li.textContent = `${game.title} - ${game.price}`;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        removeBtn.title = 'Quitar del carrito';
+        removeBtn.addEventListener('click', () => {
+          cart.splice(index, 1);
+          renderCart();
+        });
+
+        li.appendChild(removeBtn);
+        cartList.appendChild(li);
+      });
+
+      document.getElementById('cartTotal').innerHTML = `<strong>Total:</strong> $${total}`;
+    }
+  }
+
+  // Agregar al carrito desde detalle
+  addToCartBtn.addEventListener('click', () => {
+    if (currentGameKey && !cart.includes(currentGameKey)) {
+      cart.push(currentGameKey);
+    }
+    renderCart();
+    productDetail.classList.remove('active');
+    cartDetailSection.classList.add('active');
+    creditosSection.style.opacity = '0';
+    searchFilterContainer.style.opacity = '0';
+    gameGrid.style.display = 'none';
+    cartBtn.style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Botón Finalizar compra que abre modal email
+  document.getElementById('checkoutBtn').addEventListener('click', () => {
+    if (cart.length === 0) {
+      alert('Tu carrito está vacío.');
+    } else {
+      mostrarModalEmail();
+    }
+  });
+
+  // Evento scroll para el header
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('mainHeader');
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Al hacer clic en el título principal, volver al "inicio"
+document.querySelector('#mainHeader h1').addEventListener('click', () => {
+  // Ocultar detalles de producto y carrito
+  productDetail.classList.remove('active');
+  cartDetailSection.classList.remove('active');
+
+  // Ocultar modal de email si está abierto
+  emailModal.style.display = 'none';
+
+  // Mostrar elementos principales
+  gameGrid.style.display = '';
+  creditosSection.style.opacity = '1';
+  searchFilterContainer.style.opacity = '1';
+  cartBtn.style.display = 'inline-block';
+
+  // Scroll hacia arriba
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+ const defaultReviews = [
+      { rating: 5, comment: "Increíble experiencia, los juegos están muy bien hechos. ¡Felicitaciones al equipo!", author: "Lautaro B.", date: "2024-11-12" },
+      { rating: 5, comment: "Una joya oculta en el mundo indie. ¡Sigan así!", author: "Sofía R.", date: "2025-01-03" },
+      { rating: 4, comment: "Muy buena página, me encantó Cubito. Tiene mucho potencial.", author: "Nico Z.", date: "2025-02-17" },
+      { rating: 5, comment: "Lo encontré por casualidad y ahora soy fan. Todo fluye bien.", author: "María V.", date: "2025-03-01" },
+      { rating: 5, comment: "Gracias por devolverme la ilusión de jugar. Me encantó.", author: "Tobías M.", date: "2025-04-10" },
+      { rating: 4, comment: "Muy bueno el diseño y la variedad. ArgPlay promete mucho.", author: "Emilia G.", date: "2025-04-27" },
+      { rating: 5, comment: "Bohemian Studios me sorprendió. Juegos originales y buen soporte.", author: "Lucas P.", date: "2025-05-08" },
+      { rating: 5, comment: "Experiencia fluida y clara. Todo bien explicado.", author: "Valen C.", date: "2025-05-25" },
+      { rating: 3, comment: "Está bueno pero le falta mejorar el apartado gráfico de algunos juegos.", author: "Camila J.", date: "2025-06-04" },
+      { rating: 2, comment: "No me terminó de convencer, pero entiendo que están empezando.", author: "Fede L.", date: "2025-06-11" }
+    ];
+
+    const reviewComment = document.getElementById('reviewComment');
+    const reviewStars = document.getElementById('reviewStars');
+    const reviewsContainer = document.getElementById('reviewsContainer');
+
+   function renderReviews() {
+  reviewsContainer.innerHTML = '';
+
+  const userReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
+
+  userReviews.forEach((review, index) => {
+    const reviewEl = document.createElement('div');
+    reviewEl.classList.add('review-card');
+    reviewEl.innerHTML = `
+      <div class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+      <p>${review.comment}</p>
+      <small><strong>Vos</strong> – ahora mismo</small><br>
+      <button class="delete-review" data-index="${index}">Eliminar</button>
+    `;
+    reviewsContainer.appendChild(reviewEl);
+  });
+
+  document.querySelectorAll('.delete-review').forEach(btn => {
+    btn.onclick = () => {
+      const index = parseInt(btn.getAttribute('data-index'));
+      const storedReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
+      storedReviews.splice(index, 1);
+      localStorage.setItem('userReviews', JSON.stringify(storedReviews));
+      renderReviews();
+    };
+  });
+
+  defaultReviews.forEach(defaultReview => {
+    const reviewEl = document.createElement('div');
+    reviewEl.classList.add('review-card');
+    reviewEl.innerHTML = `
+      <div class="stars">${'★'.repeat(defaultReview.rating)}${'☆'.repeat(5 - defaultReview.rating)}</div>
+      <p>${defaultReview.comment}</p>
+      <small><strong>${defaultReview.author}</strong> – ${defaultReview.date}</small>
+    `;
+    reviewsContainer.appendChild(reviewEl);
+  });
+}
+
+
+      document.querySelectorAll('.delete-review').forEach(btn => {
+        btn.onclick = () => {
+          const index = parseInt(btn.getAttribute('data-index'));
+          const storedReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
+          storedReviews.splice(index, 1);
+          localStorage.setItem('userReviews', JSON.stringify(storedReviews));
+          renderReviews();
+        };
+      });
+
+      defaultReviews.forEach(defaultReview => {
+        const reviewEl = document.createElement('div');
+        reviewEl.classList.add('review');
+        reviewEl.innerHTML = `
+          <div class="stars">${'★'.repeat(defaultReview.rating)}${'☆'.repeat(5 - defaultReview.rating)}</div>
+          <p>${defaultReview.comment}</p>
+          <small><strong>${defaultReview.author}</strong> – ${defaultReview.date}</small>
+        `;
+        reviewsContainer.appendChild(reviewEl);
+      });
+    
+
+    function submitReview() {
+      const comment = reviewComment.value.trim();
+      const rating = parseInt(reviewStars.value);
+
+      if (!comment || isNaN(rating) || rating < 0 || rating > 5) {
+        alert("Por favor completá la reseña correctamente.");
+        return;
+      }
+
+      const newReview = { rating, comment };
+      const storedReviews = JSON.parse(localStorage.getItem('userReviews') || '[]');
+      storedReviews.unshift(newReview);
+      localStorage.setItem('userReviews', JSON.stringify(storedReviews));
+
+      reviewComment.value = '';
+      reviewStars.value = '5';
+      renderReviews();
+    }
+
+    renderReviews();
+
+// Creamos un link dinámicamente y lo agregamos donde queramos (ejemplo al footer)
+const linkBohemian = document.createElement('a');
+linkBohemian.href = "https://bohemianstudios.com"; // URL principal de Bohemian Studios
+linkBohemian.textContent = "Bohemian Studios";
+linkBohemian.target = "_blank"; // para abrir en nueva pestaña
+
+// Ejemplo: lo agregamos al footer (asumiendo que hay un <footer> en la página)
+const footer = document.querySelector('footer');
+if (footer) {
+  footer.appendChild(linkBohemian);
+} else {
+  // Si no hay footer, lo agregamos al body al final
+  document.body.appendChild(linkBohemian);
+}
+
+
+</script>
+
+
+</body>
+</html>
